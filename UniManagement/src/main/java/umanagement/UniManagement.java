@@ -29,16 +29,16 @@ abstract class Person {
     public String getEmail() { return email; }
 
     public void setName(String name) {
-        if (name == null || name.trim().length() == 0) {
-            this.name = "Unknown";
-        } else {
-            this.name = name.trim();
-        }
+        this.name = name.trim();
     }
 
-    public void setEmail(String email) { this.email = email; }
+    public void setEmail(String email){
+        this.email = email;
+    }
 
-    public static int getTotalPeople() { return nextId - 1; }
+    public static int getTotalPeople(){
+        return nextId - 1;
+    }
 
     // every child class MUST say what its role is
     public abstract String getRole();
@@ -48,7 +48,9 @@ abstract class Person {
     }
 
     @Override
-    public String toString() { return getDetails(); }
+    public String toString(){
+        return getDetails();
+    }
 
     @Override
     public boolean equals(Object o) {
@@ -64,9 +66,7 @@ abstract class Person {
 }
 
 
-// =====================================================================
-// 2. STUDENTS
-// =====================================================================
+/* STUDENTS */
 abstract class Student extends Person {
     private Department department;
     private ArrayList<Course> courses = new ArrayList<>();
@@ -86,14 +86,27 @@ abstract class Student extends Person {
     @Override
     public String getRole() { return getLevel() + " Student"; }
 
-    public Department getDepartment() { return department; }
-    public int getCourseCount() { return courses.size(); }
-    public Course getCourse(int index) { return courses.get(index); }
-    public double getMark(int index) { return marks.get(index); }
+    public Department getDept(){
+        return department;
+    }
 
-    public boolean canEnroll() { return courses.size() < getMaxCourses(); }
+    public int getCourseCount(){
+        return courses.size();
+    }
 
-    public boolean addCourse(Course c) {
+    public Course getCourse(int index){
+        return courses.get(index);
+    }
+
+    public double getMark(int index){
+        return marks.get(index);
+    }
+
+    public boolean canEnroll(){
+        return courses.size() < getMaxCourses();
+    }
+
+    public boolean addCourse(Course c){
         if (!canEnroll() || courses.contains(c)) {
             return false;
         }
@@ -102,7 +115,7 @@ abstract class Student extends Person {
         return true;
     }
 
-    public boolean setMark(Course c, double mark) {
+    public boolean setMark(Course c, double mark){
         int index = courses.indexOf(c);
         if (index < 0 || mark < 0 || mark > 100) {
             return false;
@@ -111,8 +124,8 @@ abstract class Student extends Person {
         return true;
     }
 
-    public double getAverage() {
-        if (marks.size() == 0) {
+    public double getAverage(){
+        if (marks.size() == 0){
             return 0;
         }
         double total = 0;
@@ -122,7 +135,7 @@ abstract class Student extends Person {
         return total / marks.size();
     }
 
-    public String getGrade() {
+    public String getGrade(){
         double avg = getAverage();
         if (avg >= 85) return "A";
         else if (avg >= 70) return "B";
@@ -131,12 +144,18 @@ abstract class Student extends Person {
         else return "F";
     }
 
-    public double getTotalFee() { return courses.size() * getFeePerCourse(); }
-    public double getFeePaid() { return feePaid; }
-    public double getFeeDue() { return getTotalFee() - feePaid; }
+    public double getTotalFee(){
+        return courses.size() * getFeePerCourse();
+    }
+    public double getFeePaid(){
+        return feePaid;
+    }
+    public double getFeeDue(){
+        return getTotalFee() - feePaid;
+    }
 
     public void payFee(double amount) {
-        if (amount > 0) {
+        if (amount > 0){
             feePaid += amount;
         }
     }
@@ -154,7 +173,9 @@ class UndergraduateStudent extends Student {
     }
 
     @Override
-    public int getMaxCourses() { return 6; }
+    public int getMaxCourses(){
+        return 6;
+    }
 
     @Override
     public double getFeePerCourse() { return 15000; }
@@ -174,13 +195,19 @@ class GraduateStudent extends Student {
     public String getThesisTopic() { return thesisTopic; }
 
     @Override
-    public int getMaxCourses() { return 4; }
+    public int getMaxCourses(){
+        return 4;
+    }
 
     @Override
-    public double getFeePerCourse() { return 25000; }
+    public double getFeePerCourse(){
+        return 25000;
+    }
 
     @Override
-    public String getLevel() { return "Graduate"; }
+    public String getLevel(){
+        return "Graduate";
+    }
 
     @Override
     public String getDetails() {
@@ -204,7 +231,7 @@ class Faculty extends Person {
     }
 
     public String getDesignation() { return designation; }
-    public Department getDepartment() { return department; }
+    public Department getDept() { return department; }
     public int getTeachingCount() { return teaching.size(); }
 
     public void assignCourse(Course c) {
@@ -223,9 +250,8 @@ class Faculty extends Person {
 }
 
 
-// =====================================================================
-// 4. STAFF (abstract) AND ITS FOUR OFFICES
-// =====================================================================
+/* STAFF (abstract) AND ITS FOUR OFFICES */
+
 abstract class Staff extends Person {
     private String office;
 
@@ -250,8 +276,8 @@ class AdmissionOffice extends Staff {
 
     public String admit(University uni, Student s) {
         uni.addStudent(s);
-        s.getDepartment().addStudent(s);
-        return s.getName() + " is admitted to " + s.getDepartment().getName()
+        s.getDept().addStudent(s);
+        return s.getName() + " is admitted to " + s.getDept().getName()
                 + " as " + s.getLevel() + " (ID " + s.getId() + ")";
     }
 
@@ -315,9 +341,9 @@ class DepartmentalStaff extends Staff {
 }
 
 
-// =====================================================================
-// 5. ROOM AND COURSE
-// =====================================================================
+
+/* ROOM AND COURSE */
+
 class Room {
     private String roomNo;
     private int capacity;
@@ -426,9 +452,8 @@ class Course {
 }
 
 
-// =====================================================================
-// 6. DEPARTMENT AND UNIVERSITY
-// =====================================================================
+/* DEPARTMENT AND UNIVERSITY */
+
 class Department {
     private String name;
     private ArrayList<Course> courses = new ArrayList<>();
@@ -437,15 +462,31 @@ class Department {
 
     public Department(String name) { this.name = name; }
 
-    public String getName() { return name; }
-    public int getCourseCount() { return courses.size(); }
-    public Course getCourse(int index) { return courses.get(index); }
-    public int getFacultyCount() { return faculty.size(); }
-    public int getStudentCount() { return students.size(); }
+    public String getName(){
+        return name;
+    }
+    public int getCourseCount(){
+        return courses.size();
+    }
+    public Course getCourse(int index){
+        return courses.get(index);
+    }
+    public int getFacultyCount(){
+        return faculty.size();
+    }
+    public int getStudentCount(){
+        return students.size();
+    }
 
-    public void addCourse(Course c) { courses.add(c); }
-    public void addFaculty(Faculty f) { faculty.add(f); }
-    public void addStudent(Student s) { students.add(s); }
+    public void addCourse(Course c){
+        courses.add(c);
+    }
+    public void addFaculty(Faculty f){
+        faculty.add(f);
+    }
+    public void addStudent(Student s){
+        students.add(s);
+    }
 }
 
 class University {
@@ -464,43 +505,47 @@ class University {
         departments.add(new Department("Management Science"));
         departments.add(new Department("Civil Engineering"));
 
-        rooms[0] = new Room("A-101", 40);
-        rooms[1] = new Room("A-102", 35);
-        rooms[2] = new Room("B-201", 30);
-        rooms[3] = new Room("B-202", 30);
-        rooms[4] = new Room("Lab-1", 25);
+        rooms[0] = new Room("G-01", 40);
+        rooms[1] = new Room("G-02", 35);
+        rooms[2] = new Room("G-03", 30);
+        rooms[3] = new Room("G-04", 30);
+        rooms[4] = new Room("Lab-01", 25);
     }
 
-    public String getName() { return name; }
-    public int getDepartmentCount() { return departments.size(); }
-    public Department getDepartment(int index) { return departments.get(index); }
-    public Room[] getRooms() { return rooms; }
+    public String getName(){
+        return name;
+    }
+    public int getDeptCount(){
+        return departments.size();
+    }
+    public Department getDept(int index) { return departments.get(index); }
+    public Room[] getRooms(){return rooms;}
 
-    public void addStudent(Student s) { students.add(s); }
+    public void addStudent(Student s){students.add(s);}
 
-    public void addFaculty(Faculty f) {
+    public void addFaculty(Faculty f){
         facultyList.add(f);
-        f.getDepartment().addFaculty(f);
+        f.getDept().addFaculty(f);
     }
 
-    public void addStaff(Staff s) { staffList.add(s); }
+    public void addStaff(Staff s){staffList.add(s);}
 
-    public int getStaffCount() { return staffList.size(); }
-    public Staff getStaff(int index) { return staffList.get(index); }
+    public int getStaffCount(){return staffList.size();}
+    public Staff getStaff(int index){return staffList.get(index);}
 
-    public Student findStudent(int id) {
-        for (int i = 0; i < students.size(); i++) {
+    public Student findStudent(int id){
+        for (int i=0; i<students.size(); i++) {
             if (students.get(i).getId() == id) {
                 return students.get(i);
             }
         }
-        return null;                         // not found
+        return null; // if id not found
     }
 
     public Course findCourse(String code) {
-        for (int d = 0; d < departments.size(); d++) {
+        for (int d=0; d<departments.size(); d++) {
             Department dept = departments.get(d);
-            for (int c = 0; c < dept.getCourseCount(); c++) {
+            for (int c=0; c<dept.getCourseCount(); c++) {
                 if (dept.getCourse(c).getCode().equalsIgnoreCase(code)) {
                     return dept.getCourse(c);
                 }
@@ -510,7 +555,7 @@ class University {
     }
 
     // puts students, faculty and staff in ONE list of Person (polymorphism)
-    public ArrayList<Person> getEveryone() {
+    public ArrayList<Person> getEveryone(){
         ArrayList<Person> everyone = new ArrayList<>();
         everyone.addAll(students);
         everyone.addAll(facultyList);
@@ -520,18 +565,17 @@ class University {
 }
 
 
-// =====================================================================
-// 7. MAIN CLASS (the "client" that uses all the classes above)
-// =====================================================================
+/* MAIN CLASS (the "client" that uses all the classes above) */
+
 public class UniManagement {
 
     static Scanner input = new Scanner(System.in);
     static University uni = new University("COMSATS University Islamabad, Wah Campus");
 
     // the four offices of the university
-    static AdmissionOffice admission = new AdmissionOffice("Mr. Kamran", "admission@uni.edu");
-    static AccountOffice account = new AccountOffice("Ms. Hina", "accounts@uni.edu");
-    static ExamOffice exam = new ExamOffice("Mr. Farooq", "exams@uni.edu");
+    static AdmissionOffice admission = new AdmissionOffice("Mr. Zaki", "admission@uni.edu");
+    static AccountOffice account = new AccountOffice("Ms. Ufaq Akram", "accounts@uni.edu");
+    static ExamOffice exam = new ExamOffice("Mr. Mojiz Kazmi", "exams@uni.edu");
     static DepartmentalStaff csStaff;
 
     public static void main(String[] args) {
@@ -562,10 +606,10 @@ public class UniManagement {
 
     // ---------------- sample data so the program is not empty ----------------
     static void loadSampleData() {
-        Department cs = uni.getDepartment(0);
-        Department ee = uni.getDepartment(1);
-        Department ms = uni.getDepartment(2);
-        Department ce = uni.getDepartment(3);
+        Department cs = uni.getDept(0);
+        Department ee = uni.getDept(1);
+        Department ms = uni.getDept(2);
+        Department ce = uni.getDept(3);
 
         // staff
         uni.addStaff(admission);
@@ -652,8 +696,8 @@ public class UniManagement {
     }
 
     static void viewDepartments() {
-        for (int d = 0; d < uni.getDepartmentCount(); d++) {
-            Department dept = uni.getDepartment(d);
+        for (int d = 0; d < uni.getDeptCount(); d++) {
+            Department dept = uni.getDept(d);
             System.out.println("[" + dept.getName() + "] Faculty: " + dept.getFacultyCount()
                     + " | Students: " + dept.getStudentCount());
             for (int c = 0; c < dept.getCourseCount(); c++) {
@@ -675,15 +719,15 @@ public class UniManagement {
         String email = readText("Student email: ");
 
         System.out.println("Departments:");
-        for (int d = 0; d < uni.getDepartmentCount(); d++) {
-            System.out.println("  " + (d + 1) + ". " + uni.getDepartment(d).getName());
+        for (int d = 0; d < uni.getDeptCount(); d++) {
+            System.out.println("  " + (d + 1) + ". " + uni.getDept(d).getName());
         }
         int deptChoice = readInt("Choose department number: ");
-        if (deptChoice < 1 || deptChoice > uni.getDepartmentCount()) {
+        if (deptChoice < 1 || deptChoice > uni.getDeptCount()) {
             System.out.println("Invalid department.");
             return;
         }
-        Department dept = uni.getDepartment(deptChoice - 1);
+        Department dept = uni.getDept(deptChoice - 1);
 
         int level = readInt("Level (1 = Undergraduate, 2 = Graduate): ");
         Student s;
@@ -824,6 +868,6 @@ public class UniManagement {
     }
 
     static double roundTo2(double x) {
-        return (int) (x * 100 + 0.5) / 100.0;   // Chapter 2 rounding trick
+        return (int) (x * 100 + 0.5) / 100.0;
     }
 }
