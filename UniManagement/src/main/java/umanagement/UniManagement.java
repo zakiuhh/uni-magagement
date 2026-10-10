@@ -578,32 +578,6 @@ public class UniManagement {
     static ExamOffice exam = new ExamOffice("Mr. Mojiz Kazmi", "exams@uni.edu");
     static DepartmentalStaff csStaff;
 
-    public static void main(String[] args) {
-        loadSampleData();
-
-        int choice = -1;
-        while (choice != 0) {
-            printMenu();
-            choice = readInt("Choose an option: ");
-            System.out.println();
-
-            switch (choice) {
-                case 1: viewDepartments(); break;
-                case 2: viewPeople(); break;
-                case 3: admitStudent(); break;
-                case 4: enrollStudent(); break;
-                case 5: recordMarks(); break;
-                case 6: showReportCard(); break;
-                case 7: payFee(); break;
-                case 8: scheduleCourse(); break;
-                case 9: showRooms(); break;
-                case 10: showStaffDuties(); break;
-                case 0: System.out.println("Goodbye!"); break;
-                default: System.out.println("Invalid option, try again.");
-            }
-        }
-    }
-
     // ---------------- sample data so the program is not empty ----------------
     static void loadSampleData() {
         Department cs = uni.getDept(0);
@@ -869,5 +843,31 @@ public class UniManagement {
 
     static double roundTo2(double x) {
         return (int) (x * 100 + 0.5) / 100.0;
+    }
+
+    public static void main(String[] args) {
+        loadSampleData();
+
+        int choice = -1;
+        while (choice != 0) {
+            printMenu();
+            choice = readInt("Choose an option: ");
+            System.out.println();
+
+            switch (choice) {
+                case 1: viewDepartments(); break;
+                case 2: viewPeople(); break;
+                case 3: admitStudent(); break;
+                case 4: enrollStudent(); break;
+                case 5: recordMarks(); break;
+                case 6: showReportCard(); break;
+                case 7: payFee(); break;
+                case 8: scheduleCourse(); break;
+                case 9: showRooms(); break;
+                case 10: showStaffDuties(); break;
+                case 0: System.out.println("Goodbye!"); break;
+                default: System.out.println("Invalid option, try again.");
+            }
+        }
     }
 }
