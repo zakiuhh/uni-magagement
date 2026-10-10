@@ -1,7 +1,6 @@
 /*
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
  */
-
 package umanagement;
 
 /**
@@ -28,17 +27,11 @@ class Person {
     public String getName() { return name; }
     public String getEmail() { return email; }
 
-    public void setName(String name) {
-        this.name = name.trim();
-    }
+    public void setName(String name){this.name = name;}
 
-    public void setEmail(String email){
-        this.email = email;
-    }
+    public void setEmail(String email){this.email = email;}
 
-    public static int getTotalPeople(){
-        return nextId - 1;
-    }
+    public static int getTotalPeople(){return nextId - 1;}
 
     // child classes override this to say what their role actually is;
     // "Person" is just the fallback if nobody overrides it
@@ -49,9 +42,7 @@ class Person {
     }
 
     @Override
-    public String toString(){
-        return getDetails();
-    }
+    public String toString(){return getDetails();}
 
     @Override
     public boolean equals(Object o) {
@@ -63,38 +54,34 @@ class Person {
     }
 
     @Override
-    public int hashCode() { return id; }
+    public int hashCode(){return id;}
 }
 
 
 /* STUDENTS */
-class Student extends Person {
-    private Department department;
+class Student extends Person{
+    private Department dept;
     private ArrayList<Course> courses = new ArrayList<>();
     private ArrayList<Double> marks = new ArrayList<>();   // marks[i] belongs to courses[i]
     private double feePaid = 0;
 
-    public Student(String name, String email, Department department) {
+    public Student(String name, String email, Department dept) {
         super(name, email);          // let Person set up id, name, email
-        this.department = department;
+        this.dept = dept;
     }
 
     // undergraduate and graduate students override these with their own numbers;
     // these are just the plain defaults for a generic Student
-    public int getMaxCourses() { return 5; }
-    public double getFeePerCourse() { return 20000; }
-    public String getLevel() { return "Student"; }
+    public int getMaxCourses(){return 5;}
+    public double getFeePerCourse(){return 20000;}
+    public String getLevel(){return "Student";}
 
     @Override
-    public String getRole() { return getLevel() + " Student"; }
+    public String getRole(){return getLevel() + " Student";}
 
-    public Department getDept(){
-        return department;
-    }
+    public Department getDept(){return dept;}
 
-    public int getCourseCount(){
-        return courses.size();
-    }
+    public int getCourseCount(){return courses.size();}
 
     public Course getCourse(int index){
         return courses.get(index);
@@ -149,12 +136,8 @@ class Student extends Person {
     public double getTotalFee(){
         return courses.size() * getFeePerCourse();
     }
-    public double getFeePaid(){
-        return feePaid;
-    }
-    public double getFeeDue(){
-        return getTotalFee() - feePaid;
-    }
+    public double getFeePaid(){return feePaid;}
+    public double getFeeDue(){return getTotalFee() - feePaid;}
 
     public void payFee(double amount) {
         if (amount > 0){
@@ -164,14 +147,14 @@ class Student extends Person {
 
     @Override
     public String getDetails() {
-        return super.getDetails() + " | Dept: " + department.getName()
+        return super.getDetails() + " | Dept: " + dept.getName()
                 + " | Courses: " + courses.size() + "/" + getMaxCourses();
     }
 }
 
 class UndergraduateStudent extends Student {
-    public UndergraduateStudent(String name, String email, Department department) {
-        super(name, email, department);
+    public UndergraduateStudent(String name, String email, Department dept) {
+        super(name, email, dept);
     }
 
     @Override
@@ -189,8 +172,8 @@ class UndergraduateStudent extends Student {
 class GraduateStudent extends Student {
     private String thesisTopic;
 
-    public GraduateStudent(String name, String email, Department department, String thesisTopic) {
-        super(name, email, department);
+    public GraduateStudent(String name, String email, Department dept, String thesisTopic) {
+        super(name, email, dept);
         this.thesisTopic = thesisTopic;
     }
 
@@ -218,128 +201,124 @@ class GraduateStudent extends Student {
 }
 
 
-// =====================================================================
-// 3. FACULTY
-// =====================================================================
+/* FACULTY */
+
 class Faculty extends Person {
     private String designation;
-    private Department department;
+    private Department dept;
     private ArrayList<Course> teaching = new ArrayList<>();
 
-    public Faculty(String name, String email, Department department, String designation) {
+    public Faculty(String name, String email, Department dept, String designation){
         super(name, email);
-        this.department = department;
+        this.dept = dept;
         this.designation = designation;
     }
 
-    public String getDesignation() { return designation; }
-    public Department getDept() { return department; }
-    public int getTeachingCount() { return teaching.size(); }
+    public String getDesignation(){return designation;}
+    public Department getDept(){return dept;}
+    public int getTeachingCount(){return teaching.size();}
 
-    public void assignCourse(Course c) {
+    public void assignCourse(Course c){
         teaching.add(c);
         c.setInstructor(this);       // tell the course who teaches it
     }
 
     @Override
-    public String getRole() { return "Faculty"; }
+    public String getRole(){return "Faculty";}
 
     @Override
-    public String getDetails() {
-        return super.getDetails() + " | " + designation + " | Dept: "
-                + department.getName() + " | Teaching: " + teaching.size() + " course(s)";
+    public String getDetails(){
+        return super.getDetails()+" | "+designation+" | Dept: "+dept.getName()+" | Teaching: "+teaching.size()+" course(s)";
     }
 }
 
 
 /* STAFF AND ITS FOUR OFFICES */
 
-class Staff extends Person {
+class Staff extends Person{
     private String office;
 
-    public Staff(String name, String email, String office) {
+    public Staff(String name, String email, String office){
         super(name, email);
         this.office = office;
     }
 
-    public String getOffice() { return office; }
+    public String getOffice(){return office;}
 
     // each office overrides this to describe its own job;
     // this is just the plain default for a generic Staff member
-    public String performDuty() { return "General staff duties."; }
+    public String performDuty(){return "General staff duties.";}
 
     @Override
-    public String getRole() { return office + " Staff"; }
+    public String getRole(){return office+" Staff";}
 }
 
-class AdmissionOffice extends Staff {
-    public AdmissionOffice(String name, String email) {
+class AdmissionOffice extends Staff{
+    public AdmissionOffice(String name, String email){
         super(name, email, "Admission Office");
     }
 
-    public String admit(University uni, Student s) {
+    public String admit(University uni, Student s){
         uni.addStudent(s);
         s.getDept().addStudent(s);
-        return s.getName() + " is admitted to " + s.getDept().getName()
-                + " as " + s.getLevel() + " (ID " + s.getId() + ")";
+        return s.getName() + " is admitted to " + s.getDept().getName()+" as "+s.getLevel()+" (ID "+s.getId()+")";
     }
 
     @Override
-    public String performDuty() { return "Admits new students and gives them an ID."; }
+    public String performDuty(){return "Admits new students and gives them an ID.";}
 }
 
-class AccountOffice extends Staff {
-    public AccountOffice(String name, String email) {
+class AccountOffice extends Staff{
+    public AccountOffice(String name, String email){
         super(name, email, "Account Office");
     }
 
-    public String collectFee(Student s, double amount) {
-        if (amount <= 0) {
+    public String collectFee(Student s, double amount){
+        if (amount <=0){
             return "Failed: amount must be more than 0.";
         }
         s.payFee(amount);
-        return "Received Rs. " + amount + " from " + s.getName()
-                + ". Fee still due: Rs. " + s.getFeeDue();
+        return "Received Rs. " + amount + " from " + s.getName()+". Fee still due: Rs. "+s.getFeeDue();
     }
 
     @Override
-    public String performDuty() { return "Collects fees and keeps the payment records."; }
+    public String performDuty(){return "Collects fees and keeps the payment records.";}
 }
 
-class ExamOffice extends Staff {
-    public ExamOffice(String name, String email) {
+class ExamOffice extends Staff{
+    public ExamOffice(String name, String email){
         super(name, email, "Exam Office");
     }
 
-    public String recordMarks(Student s, Course c, double marks) {
-        if (s.setMark(c, marks)) {
-            return "Marks saved: " + s.getName() + " got " + marks + " in " + c.getCode();
+    public String recordMarks(Student s, Course c, double marks){
+        if (s.setMark(c, marks)){
+            return "Marks saved: "+s.getName()+" got "+marks +" in "+c.getCode();
         }
         return "Failed: student is not in this course, or marks are not between 0 and 100.";
     }
 
     @Override
-    public String performDuty() { return "Records marks and prepares results."; }
+    public String performDuty(){return "Records marks and prepares results.";}
 }
 
 class DepartmentalStaff extends Staff {
-    private Department department;
+    private Department dept;
 
-    public DepartmentalStaff(String name, String email, Department department) {
+    public DepartmentalStaff(String name, String email, Department dept){
         super(name, email, "Departmental Support");
-        this.department = department;
+        this.dept = dept;
     }
 
     public String scheduleClass(Course c, Room r, String slot) {
-        if (c.schedule(r, slot)) {
-            return c.getCode() + " is now in room " + r.getRoomNo() + " at " + slot;
+        if (c.schedule(r, slot)){
+            return c.getCode()+" is now in room "+r.getRoomNo()+" at "+slot;
         }
-        return "Failed: room " + r.getRoomNo() + " is already booked at " + slot;
+        return "Failed: room "+r.getRoomNo()+" is already booked at "+slot;
     }
 
     @Override
-    public String performDuty() {
-        return "Helps " + department.getName() + " with schedules and class rooms.";
+    public String performDuty(){
+        return "Helps "+dept.getName()+" with schedules and class rooms.";
     }
 }
 
@@ -352,20 +331,20 @@ class Room {
     private int capacity;
     private ArrayList<String> bookedSlots = new ArrayList<>();
 
-    public Room(String roomNo, int capacity) {
+    public Room(String roomNo, int capacity){
         this.roomNo = roomNo;
         this.capacity = capacity;
     }
 
-    public String getRoomNo() { return roomNo; }
-    public int getCapacity() { return capacity; }
-    public int getBookedCount() { return bookedSlots.size(); }
-    public String getBookedSlot(int index) { return bookedSlots.get(index); }
+    public String getRoomNo(){return roomNo;}
+    public int getCapacity(){return capacity;}
+    public int getBookedCount(){return bookedSlots.size();}
+    public String getBookedSlot(int index){return bookedSlots.get(index);}
 
-    public boolean isFree(String slot) { return !bookedSlots.contains(slot); }
+    public boolean isFree(String slot) {return !bookedSlots.contains(slot);}
 
-    public boolean book(String slot) {
-        if (isFree(slot)) {
+    public boolean book(String slot){
+        if (isFree(slot)){
             bookedSlots.add(slot);
             return true;
         }
@@ -374,7 +353,7 @@ class Room {
 }
 
 class Course {
-    private static int totalCourses = 0;
+    private static int totalCourses=0;
     private String code;
     private String name;
     private int creditHours;
@@ -494,7 +473,7 @@ class Department {
 
 class University {
     private String name;
-    private ArrayList<Department> departments = new ArrayList<>();
+    private ArrayList<Department> depts = new ArrayList<>();
     private ArrayList<Student> students = new ArrayList<>();
     private ArrayList<Faculty> facultyList = new ArrayList<>();
     private ArrayList<Staff> staffList = new ArrayList<>();
@@ -502,11 +481,11 @@ class University {
 
     public University(String name) {
         this.name = name;
-        // the university creates its own departments and rooms (composition)
-        departments.add(new Department("Computer Science"));
-        departments.add(new Department("Electrical Engineering"));
-        departments.add(new Department("Management Science"));
-        departments.add(new Department("Civil Engineering"));
+        // the university creates its own depts and rooms (composition)
+        depts.add(new Department("Computer Science"));
+        depts.add(new Department("Electrical Engineering"));
+        depts.add(new Department("Management Science"));
+        depts.add(new Department("Civil Engineering"));
 
         rooms[0] = new Room("G-01", 40);
         rooms[1] = new Room("G-02", 35);
@@ -519,9 +498,9 @@ class University {
         return name;
     }
     public int getDeptCount(){
-        return departments.size();
+        return depts.size();
     }
-    public Department getDept(int index) { return departments.get(index); }
+    public Department getDept(int index) { return depts.get(index); }
     public Room[] getRooms(){return rooms;}
 
     public void addStudent(Student s){students.add(s);}
@@ -546,8 +525,8 @@ class University {
     }
 
     public Course findCourse(String code) {
-        for (int d=0; d<departments.size(); d++) {
-            Department dept = departments.get(d);
+        for (int d=0; d<depts.size(); d++) {
+            Department dept = depts.get(d);
             for (int c=0; c<dept.getCourseCount(); c++) {
                 if (dept.getCourse(c).getCode().equalsIgnoreCase(code)) {
                     return dept.getCourse(c);
@@ -570,7 +549,7 @@ class University {
 
 /* MAIN CLASS (the "client" that uses all the classes above) */
 
-public class UniManagement {
+public class Main {
 
     static Scanner input = new Scanner(System.in);
     static University uni = new University("COMSATS University Islamabad, Wah Campus");
@@ -659,7 +638,7 @@ public class UniManagement {
     static void printMenu() {
         System.out.println();
         System.out.println("=== " + uni.getName() + " ===");
-        System.out.println(" 1. View departments and courses");
+        System.out.println(" 1. View depts and courses");
         System.out.println(" 2. View all people (students, faculty, staff)");
         System.out.println(" 3. Admit a new student");
         System.out.println(" 4. Enroll a student in a course");
@@ -699,9 +678,9 @@ public class UniManagement {
         for (int d = 0; d < uni.getDeptCount(); d++) {
             System.out.println("  " + (d + 1) + ". " + uni.getDept(d).getName());
         }
-        int deptChoice = readInt("Choose department number: ");
+        int deptChoice = readInt("Choose dept number: ");
         if (deptChoice < 1 || deptChoice > uni.getDeptCount()) {
-            System.out.println("Invalid department.");
+            System.out.println("Invalid dept.");
             return;
         }
         Department dept = uni.getDept(deptChoice - 1);
