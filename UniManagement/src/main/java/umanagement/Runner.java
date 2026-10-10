@@ -46,7 +46,7 @@ public class Runner{
         // faculty
         Faculty f1 = new Faculty("Dr. Nadir Shah", "nadirshah@cuiwah.edu.pk", cs, "Professor");
         Faculty f2 = new Faculty("Sir Taimur Sajjad", "taimursajjad@cuiwah.edu.pk", ee, "Lecturer");
-        Faculty f3 = new Faculty("Dr. Bilal Sheikh", "bilal@cuiwah.edu.pk", ms, "Lecturer");
+        Faculty f3 = new Faculty("Ms. Eishaal Masood", "eishaal@cuiwah.edu.pk", ms, "Lecturer");
         uni.addFaculty(f1);
         uni.addFaculty(f2);
         uni.addFaculty(f3);
@@ -68,9 +68,9 @@ public class Runner{
 
         // class rooms and time slots
         Room[] rooms = uni.getRooms();
-        csStaff.scheduleClass(c1, rooms[0], "Mon 09:00");
-        csStaff.scheduleClass(c2, rooms[0], "Mon 11:00");
-        csStaff.scheduleClass(c3, rooms[4], "Tue 14:00");
+        csStaff.scheduleClass(c1, rooms[0], "Fri  09:00");
+        csStaff.scheduleClass(c2, rooms[1], "Wed  11:00");
+        csStaff.scheduleClass(c3, rooms[2], "Tue  14:00");
 
         // students
         Student s1 = new UndergraduateStudent("Ufaq Akram", "ufaq@cui.edu", cs);
@@ -247,7 +247,7 @@ public class Runner{
             printMenu();
             System.out.print("Choose an option: ");
             choice = input.nextInt();
-            input.nextLine();   // flush the leftover Enter key so the next nextLine() call isn't skipped
+            input.nextLine(); // flush the leftover Enter key so the next nextLine() call isn't skipped
             System.out.println();
 
             switch (choice) {
