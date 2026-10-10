@@ -12,7 +12,7 @@ package umanagement;
 import java.util.ArrayList;
 import java.util.Scanner;
 
-abstract class Person {
+class Person {
     private static int nextId = 1;   // shared by all objects: gives each person a new id
     private int id;
     private String name;
@@ -40,8 +40,9 @@ abstract class Person {
         return nextId - 1;
     }
 
-    // every child class MUST say what its role is
-    public abstract String getRole();
+    // child classes override this to say what their role actually is;
+    // "Person" is just the fallback if nobody overrides it
+    public String getRole() { return "Person"; }
 
     public String getDetails() {
         return getRole() + " #" + id + " | " + name + " | " + email;
@@ -67,7 +68,7 @@ abstract class Person {
 
 
 /* STUDENTS */
-abstract class Student extends Person {
+class Student extends Person {
     private Department department;
     private ArrayList<Course> courses = new ArrayList<>();
     private ArrayList<Double> marks = new ArrayList<>();   // marks[i] belongs to courses[i]
@@ -78,10 +79,11 @@ abstract class Student extends Person {
         this.department = department;
     }
 
-    // undergraduate and graduate students decide these in their own way
-    public abstract int getMaxCourses();
-    public abstract double getFeePerCourse();
-    public abstract String getLevel();
+    // undergraduate and graduate students override these with their own numbers;
+    // these are just the plain defaults for a generic Student
+    public int getMaxCourses() { return 5; }
+    public double getFeePerCourse() { return 20000; }
+    public String getLevel() { return "Student"; }
 
     @Override
     public String getRole() { return getLevel() + " Student"; }
@@ -250,9 +252,9 @@ class Faculty extends Person {
 }
 
 
-/* STAFF (abstract) AND ITS FOUR OFFICES */
+/* STAFF AND ITS FOUR OFFICES */
 
-abstract class Staff extends Person {
+class Staff extends Person {
     private String office;
 
     public Staff(String name, String email, String office) {
@@ -262,8 +264,9 @@ abstract class Staff extends Person {
 
     public String getOffice() { return office; }
 
-    // each office describes its own job
-    public abstract String performDuty();
+    // each office overrides this to describe its own job;
+    // this is just the plain default for a generic Staff member
+    public String performDuty() { return "General staff duties."; }
 
     @Override
     public String getRole() { return office + " Staff"; }
