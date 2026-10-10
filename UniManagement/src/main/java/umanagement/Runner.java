@@ -55,7 +55,7 @@ public class Runner{
         Course c1 = new Course("cs101", "Programming Fundamentals", 3, "Undergraduate");
         Course c2 = new Course("cs102", "Object Oriented Programming", 3, "Undergraduate");
         Course c3 = new Course("cs103", "Machine Learning", 3, "Graduate");
-        
+
 
         cs.addCourse(c1);
         cs.addCourse(c2);
@@ -233,7 +233,7 @@ public class Runner{
             System.out.println(st.getOffice() + " (" + st.getName() + "): " + st.performDuty());
         }
     }
-    
+
     // ---------------- small helper ----------------
     /* static double roundTo2(double x) {
         return (int) (x * 100 + 0.5) / 100.0;
@@ -247,6 +247,7 @@ public class Runner{
             printMenu();
             System.out.print("Choose an option: ");
             choice = input.nextInt();
+            input.nextLine();   // flush the leftover Enter key so the next nextLine() call isn't skipped
             System.out.println();
 
             switch (choice) {
