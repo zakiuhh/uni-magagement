@@ -549,7 +549,7 @@ class University {
 
 /* MAIN CLASS (the "client" that uses all the classes above) */
 
-public class Main {
+public class UniManagement {
 
     static Scanner input = new Scanner(System.in);
     static University uni = new University("COMSATS University Islamabad, Wah Campus");
