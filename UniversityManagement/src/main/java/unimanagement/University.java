@@ -6,7 +6,7 @@ package unimanagement;
 
 /**
  *
- * @author Zaki
+ * @authors Ufaq-009, Mojiz-044 and Zaki-048
  */
 
 import java.util.Date;
